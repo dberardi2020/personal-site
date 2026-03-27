@@ -1,0 +1,228 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SkinDrawer from '../components/SkinDrawer.astro';
+import { personal, about, skills, experience, education, gameDev, hobbies } from '../data/content';
+---
+
+<Layout>
+  <style is:global>
+    body { background-color: #0D1117; }
+
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .hero-bg {
+      background: linear-gradient(-45deg, #0D1117, #0f2027, #1a0533, #0D1117);
+      background-size: 400% 400%;
+      animation: gradient-shift 12s ease infinite;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger delays for child items */
+    .stagger > *:nth-child(1) { transition-delay: 0s; }
+    .stagger > *:nth-child(2) { transition-delay: 0.1s; }
+    .stagger > *:nth-child(3) { transition-delay: 0.2s; }
+    .stagger > *:nth-child(4) { transition-delay: 0.3s; }
+    .stagger > *:nth-child(5) { transition-delay: 0.4s; }
+    .stagger > *:nth-child(6) { transition-delay: 0.5s; }
+
+    /* Lift cards on hover */
+    .lift {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .lift:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(34, 211, 238, 0.1);
+    }
+  </style>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0D1117]/80 backdrop-blur-md border-b border-cyan-500/10">
+    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+      <span class="font-bold text-cyan-400 tracking-wider">{personal.initials}</span>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="#about-motion" class="hover:text-cyan-400 transition-colors">About</a>
+        <a href="#work-motion" class="hover:text-cyan-400 transition-colors">Work</a>
+        <a href="#gamedev-motion" class="hover:text-cyan-400 transition-colors">Game Dev</a>
+        <a href="#hobbies-motion" class="hover:text-cyan-400 transition-colors">Hobbies</a>
+        <a href="#contact-motion" class="hover:text-cyan-400 transition-colors">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-bg min-h-screen flex flex-col justify-center px-6 pt-14">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="text-cyan-400 text-sm font-medium tracking-widest uppercase mb-4">Hey, I'm</p>
+      <h1 class="text-6xl md:text-8xl font-bold tracking-tight text-white mb-6 leading-tight">
+        Dimitri<br />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-400">Berardi</span>
+      </h1>
+      <p class="text-xl text-slate-400 mb-10 max-w-xl leading-relaxed">{personal.tagline}</p>
+      <div class="flex gap-4 flex-wrap">
+        <a href="#work-motion" class="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-semibold rounded-lg transition-all hover:shadow-lg hover:shadow-cyan-500/30 hover:-translate-y-0.5">
+          View My Work
+        </a>
+        <a href="#contact-motion" class="px-6 py-3 border border-slate-700 hover:border-cyan-500/50 text-slate-300 hover:text-white font-semibold rounded-lg transition-all hover:-translate-y-0.5">
+          Get In Touch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about-motion" class="py-24 px-6 bg-[#0D1117]">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="reveal text-3xl font-bold mb-16 text-white">About Me</h2>
+      <div class="grid md:grid-cols-2 gap-6 stagger">
+        <div class="reveal lift bg-white/5 border border-white/10 rounded-xl p-8">
+          <h3 class="text-cyan-400 text-xs font-medium tracking-widest uppercase mb-4">Who I Am</h3>
+          {about.who.map(p => <p class="text-slate-400 leading-relaxed mb-4">{p}</p>)}
+        </div>
+        <div class="reveal lift bg-white/5 border border-white/10 rounded-xl p-8">
+          <h3 class="text-violet-400 text-xs font-medium tracking-widest uppercase mb-4">My Mission</h3>
+          {about.mission.map(p => <p class="text-slate-400 leading-relaxed mb-4">{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="py-24 px-6 bg-[#0D1117]">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="reveal text-3xl font-bold mb-16 text-white">Skills</h2>
+      <div class="grid md:grid-cols-2 gap-8 stagger">
+        {Object.entries(skills).map(([category, items]) => (
+          <div class="reveal lift bg-white/5 border border-white/10 rounded-xl p-6">
+            <h3 class="text-cyan-400 text-xs font-medium tracking-widest uppercase mb-4">
+              {category.replace(/([A-Z])/g, ' $1').trim()}
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {items.map(s => (
+                <span class="px-3 py-1 bg-cyan-500/10 text-cyan-300 rounded-md text-sm border border-cyan-500/20">{s}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="work-motion" class="py-24 px-6 bg-[#0D1117]">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="reveal text-3xl font-bold mb-16 text-white">Experience</h2>
+      <div class="space-y-6 stagger">
+        {experience.map(job => (
+          <div class={`reveal lift rounded-xl p-6 border ${job.current ? 'bg-cyan-500/5 border-cyan-500/20' : 'bg-white/5 border-white/10'}`}>
+            <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
+              <h3 class="text-lg font-semibold text-white">{job.title}</h3>
+              <span class="text-sm text-slate-500 font-mono">{job.period}</span>
+            </div>
+            <p class={`text-sm ${job.promotion ? 'mb-1' : 'mb-4'} ${job.current ? 'text-cyan-400' : 'text-slate-500'}`}>
+              {job.company} · {job.location}
+            </p>
+            {job.promotion && <p class="text-xs text-slate-600 mb-4">{job.promotion}</p>}
+            <ul class="text-slate-400 text-sm space-y-2 list-disc list-inside leading-relaxed">
+              {job.bullets.map(b => <li>{b}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="py-24 px-6 bg-[#0D1117]">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="reveal text-3xl font-bold mb-16 text-white">Education</h2>
+      <div class="reveal lift bg-cyan-500/5 border border-cyan-500/20 rounded-xl p-6">
+        <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
+          <h3 class="text-lg font-semibold text-white">{education.school}</h3>
+          <span class="text-sm text-slate-500 font-mono">Graduated {education.graduated}</span>
+        </div>
+        <p class="text-cyan-400 text-sm mb-1">{education.degree} · GPA {education.gpa}</p>
+        <p class="text-slate-500 text-sm">{education.minors}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME DEV -->
+  <section id="gamedev-motion" class="py-24 px-6 bg-[#0D1117]">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="reveal text-3xl font-bold mb-4 text-white">Game Dev</h2>
+      <p class="reveal text-slate-400 mb-16 max-w-xl">{gameDev.description}</p>
+      <div class="grid md:grid-cols-2 gap-6 stagger">
+        {gameDev.games.map(game => (
+          <div class="reveal lift bg-white/5 border border-cyan-500/20 rounded-xl p-6">
+            <span class="text-xs font-medium text-cyan-400 tracking-widest uppercase">{game.status}</span>
+            <h3 class="text-xl font-semibold text-white mt-2 mb-3">{game.title}</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">{game.description}</p>
+          </div>
+        ))}
+        <div class="reveal bg-white/[0.02] border border-dashed border-white/10 rounded-xl p-6 flex flex-col justify-center">
+          <span class="text-xs font-medium text-slate-600 tracking-widest uppercase">Coming Soon</span>
+          <h3 class="text-xl font-semibold text-slate-700 mt-2">Next Title</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOBBIES -->
+  <section id="hobbies-motion" class="py-24 px-6 bg-[#0D1117]">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="reveal text-3xl font-bold mb-4 text-white">Hobbies & Interests</h2>
+      <p class="reveal text-slate-400 mb-16 max-w-xl">When I'm not at a keyboard.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 stagger">
+        {hobbies.map(({ label, icon }) => (
+          <div class="reveal lift bg-white/5 border border-white/10 rounded-xl p-6 flex items-center gap-4">
+            <span class="text-2xl">{icon}</span>
+            <span class="text-slate-300 font-medium">{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact-motion" class="py-24 px-6 bg-[#0D1117]">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="reveal text-3xl font-bold mb-4 text-white">Get In Touch</h2>
+      <p class="reveal text-slate-400 mb-12 max-w-xl">Whether it's a project, a job, or just a conversation - I'm open to it.</p>
+      <div class="reveal flex gap-4 flex-wrap">
+        <a href={`mailto:${personal.email}`} class="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-semibold rounded-lg transition-all hover:shadow-lg hover:shadow-cyan-500/30 hover:-translate-y-0.5">Email Me</a>
+        <a href={personal.github} target="_blank" rel="noopener noreferrer" class="px-6 py-3 border border-slate-700 hover:border-cyan-500/50 text-slate-300 hover:text-white font-semibold rounded-lg transition-all hover:-translate-y-0.5">GitHub</a>
+        <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" class="px-6 py-3 border border-slate-700 hover:border-violet-500/50 text-slate-300 hover:text-white font-semibold rounded-lg transition-all hover:-translate-y-0.5">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 px-6 border-t border-white/5 bg-[#0D1117]">
+    <div class="max-w-5xl mx-auto flex items-center justify-between text-sm text-slate-600">
+      <span>© {personal.copyright}</span>
+      <span class="font-mono">Built with Astro + Tailwind</span>
+    </div>
+  </footer>
+
+  <SkinDrawer current="3D / Motion" />
+</Layout>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>

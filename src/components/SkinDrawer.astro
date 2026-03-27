@@ -1,17 +1,10 @@
 ---
+import { SKINS, DEFAULT_SKIN } from '../config/skins';
+
 interface Props {
   current: string;
 }
 const { current } = Astro.props;
-
-const skins = [
-  { label: 'Dark',          href: '/',                  built: true, desc: 'Clean dark with emerald' },
-  { label: 'Aurora',        href: '/preview/glass',     built: true, desc: 'Mesh gradients, dark glow' },
-  { label: 'Bold',          href: '/preview/bold',      built: true, desc: 'Saturated gradients, Y2K energy' },
-  { label: 'Earthy',        href: '/preview/earthy',    built: true, desc: 'Muted tones, organic minimalism' },
-  { label: '3D / Motion',   href: '/preview/motion',    built: true, desc: 'Scroll animations, immersive' },
-  { label: 'Neobrutalist',  href: '/preview/brutalist', built: true, desc: 'Bold type, stark contrast' },
-];
 ---
 
 <!-- Toggle button -->
@@ -39,30 +32,24 @@ const skins = [
     <button id="skin-close" class="text-slate-400 hover:text-white transition-colors text-sm">Close</button>
   </div>
   <div class="p-4 grid grid-cols-2 gap-3 pb-8">
-    {skins.map(skin => (
-      skin.built
-        ? (
-          <a
-            href={skin.href}
-            class={`flex flex-col gap-1 p-4 rounded-xl border transition-colors ${
-              skin.label === current
-                ? 'bg-white/10 border-white/30 text-white'
-                : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 hover:text-white'
-            }`}
-          >
-            <span class="font-medium text-sm">{skin.label}</span>
-            <span class="text-xs opacity-60">{skin.desc}</span>
-            {skin.label === current && <span class="text-xs text-emerald-400 mt-1">Current</span>}
-          </a>
-        )
-        : (
-          <div class="flex flex-col gap-1 p-4 rounded-xl border border-white/5 bg-white/[0.02] opacity-50 cursor-not-allowed">
-            <span class="font-medium text-sm text-slate-500">{skin.label}</span>
-            <span class="text-xs text-slate-600">{skin.desc}</span>
-            <span class="text-xs text-slate-600 mt-1">Coming soon</span>
-          </div>
-        )
-    ))}
+    {SKINS.map(skin => {
+      const href = skin.id === DEFAULT_SKIN ? '/' : `/preview/${skin.id}`;
+      const isActive = skin.label === current;
+      return (
+        <a
+          href={href}
+          class={`flex flex-col gap-1 p-4 rounded-xl border transition-colors ${
+            isActive
+              ? 'bg-white/10 border-white/30 text-white'
+              : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 hover:text-white'
+          }`}
+        >
+          <span class="font-medium text-sm">{skin.label}</span>
+          <span class="text-xs opacity-60">{skin.desc}</span>
+          {isActive && <span class="text-xs text-emerald-400 mt-1">Current</span>}
+        </a>
+      );
+    })}
   </div>
 </div>
 
