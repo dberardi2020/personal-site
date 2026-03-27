@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SkinDrawer from '../components/SkinDrawer.astro';
+import { personal, about, skills, experience, education, gameDev, hobbies } from '../data/content';
+---
+
+<Layout>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-sm border-b border-slate-800">
+    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+      <span class="font-semibold tracking-tight text-emerald-400">{personal.initials}</span>
+      <div class="flex gap-6 text-sm text-slate-400">
+        <a href="#about" class="hover:text-slate-100 transition-colors">About</a>
+        <a href="#work" class="hover:text-slate-100 transition-colors">Work</a>
+        <a href="#gamedev" class="hover:text-slate-100 transition-colors">Game Dev</a>
+        <a href="#hobbies" class="hover:text-slate-100 transition-colors">Hobbies</a>
+        <a href="#contact" class="hover:text-slate-100 transition-colors">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="min-h-screen flex flex-col justify-center px-6 pt-14">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="text-emerald-400 text-sm font-medium tracking-widest uppercase mb-4">Hey, I'm</p>
+      <h1 class="text-6xl md:text-8xl font-bold tracking-tight text-slate-100 mb-6">
+        Dimitri<br />Berardi
+      </h1>
+      <p class="text-xl md:text-2xl text-slate-400 mb-10 max-w-xl">{personal.tagline}</p>
+      <div class="flex gap-4 flex-wrap">
+        <a href="#work" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold rounded-lg transition-colors">View My Work</a>
+        <a href="#contact" class="px-6 py-3 border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-slate-100 font-semibold rounded-lg transition-colors">Get In Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="py-24 px-6 bg-slate-900">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-16 text-slate-100">About Me</h2>
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <h3 class="text-emerald-400 text-sm font-medium tracking-widest uppercase mb-4">Who I Am</h3>
+          {about.who.map(p => <p class="text-slate-300 leading-relaxed mb-4">{p}</p>)}
+        </div>
+        <div>
+          <h3 class="text-emerald-400 text-sm font-medium tracking-widest uppercase mb-4">My Mission</h3>
+          {about.mission.map(p => <p class="text-slate-300 leading-relaxed mb-4">{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-16 text-slate-100">Skills</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        {Object.entries(skills).map(([category, items]) => (
+          <div>
+            <h3 class="text-emerald-400 text-sm font-medium tracking-widest uppercase mb-4">
+              {category.replace(/([A-Z])/g, ' $1').trim()}
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {items.map(s => (
+                <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded-md text-sm border border-slate-700">{s}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="work" class="py-24 px-6 bg-slate-900">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-16 text-slate-100">Experience</h2>
+      <div class="space-y-10">
+        {experience.map(job => (
+          <div class={`border-l-2 pl-6 ${job.current ? 'border-emerald-500' : 'border-slate-700'}`}>
+            <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
+              <h3 class="text-lg font-semibold text-slate-100">{job.title}</h3>
+              <span class="text-sm text-slate-500">{job.period}</span>
+            </div>
+            <p class={`text-sm ${job.promotion ? 'mb-1' : 'mb-3'} ${job.current ? 'text-emerald-400' : 'text-slate-400'}`}>
+              {job.company} · {job.location}
+            </p>
+            {job.promotion && <p class="text-xs text-slate-600 mb-3">{job.promotion}</p>}
+            <ul class="text-slate-400 text-sm space-y-2 list-disc list-inside leading-relaxed">
+              {job.bullets.map(b => <li>{b}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-16 text-slate-100">Education</h2>
+      <div class="border-l-2 border-emerald-500 pl-6">
+        <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
+          <h3 class="text-lg font-semibold text-slate-100">{education.school}</h3>
+          <span class="text-sm text-slate-500">Graduated {education.graduated}</span>
+        </div>
+        <p class="text-emerald-400 text-sm mb-1">{education.degree} · GPA {education.gpa}</p>
+        <p class="text-slate-400 text-sm">{education.minors}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME DEV -->
+  <section id="gamedev" class="py-24 px-6 bg-slate-900">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4 text-slate-100">Game Dev</h2>
+      <p class="text-slate-400 mb-16 max-w-xl">{gameDev.description}</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        {gameDev.games.map(game => (
+          <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+            <span class="text-xs font-medium text-emerald-400 tracking-widest uppercase">{game.status}</span>
+            <h3 class="text-xl font-semibold text-slate-100 mt-2 mb-3">{game.title}</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">{game.description}</p>
+          </div>
+        ))}
+        <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 border-dashed flex flex-col justify-center">
+          <span class="text-xs font-medium text-slate-500 tracking-widest uppercase">Coming Soon</span>
+          <h3 class="text-xl font-semibold text-slate-600 mt-2">Next Title</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOBBIES -->
+  <section id="hobbies" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4 text-slate-100">Hobbies & Interests</h2>
+      <p class="text-slate-400 mb-16 max-w-xl">When I'm not at a keyboard.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {hobbies.map(({ label, icon }) => (
+          <div class="bg-slate-900 rounded-xl p-6 border border-slate-800 flex items-center gap-4">
+            <span class="text-2xl">{icon}</span>
+            <span class="text-slate-300 font-medium">{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6 bg-slate-900">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4 text-slate-100">Get In Touch</h2>
+      <p class="text-slate-400 mb-12 max-w-xl">Whether it's a project, a job, or just a conversation - I'm open to it.</p>
+      <div class="flex gap-4 flex-wrap">
+        <a href={`mailto:${personal.email}`} class="px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold rounded-lg transition-colors">Email Me</a>
+        <a href={personal.github} target="_blank" rel="noopener noreferrer" class="px-6 py-3 border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-slate-100 font-semibold rounded-lg transition-colors">GitHub</a>
+        <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" class="px-6 py-3 border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-slate-100 font-semibold rounded-lg transition-colors">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 px-6 border-t border-slate-800">
+    <div class="max-w-5xl mx-auto flex items-center justify-between text-sm text-slate-600">
+      <span>© {personal.copyright}</span>
+      <span>Built with Astro + Tailwind</span>
+    </div>
+  </footer>
+
+  <SkinDrawer current="Dark" />
+
+</Layout>

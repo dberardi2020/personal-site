@@ -1,0 +1,272 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SkinDrawer from '../components/SkinDrawer.astro';
+import { personal, about, skills, experience, education, gameDev, hobbies } from '../data/content';
+---
+
+<Layout>
+  <style is:global>
+    body { background-color: #0d0d2b; color: #e8e8f0; font-family: 'Courier New', monospace; }
+
+    /* Scanlines */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .pixel-border {
+      border: 2px solid #ff2d78;
+      box-shadow: 0 0 0 2px #0d0d2b, 0 0 0 4px #ff2d78;
+    }
+    .pixel-border-cyan {
+      border: 2px solid #00e5ff;
+      box-shadow: 0 0 0 2px #0d0d2b, 0 0 0 4px #00e5ff;
+    }
+
+    .retro-heading {
+      font-family: 'Courier New', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #ffe600;
+      text-shadow: 2px 2px 0px #ff6b00, 4px 4px 0px rgba(255,107,0,0.25);
+    }
+
+    .retro-btn {
+      font-family: 'Courier New', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 2px solid;
+      padding: 12px 24px;
+      display: inline-block;
+      font-weight: bold;
+      font-size: 0.8rem;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .retro-btn-primary {
+      background: #ff2d78;
+      border-color: #ff2d78;
+      color: #0d0d2b;
+      box-shadow: 4px 4px 0px #8b0032;
+    }
+    .retro-btn-primary:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0px #8b0032; }
+    .retro-btn-secondary {
+      background: transparent;
+      border-color: #00e5ff;
+      color: #00e5ff;
+      box-shadow: 4px 4px 0px #004d6b;
+    }
+    .retro-btn-secondary:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0px #004d6b; }
+
+    .blink { animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .badge {
+      display: inline-block;
+      background: #ff2d78;
+      color: #0d0d2b;
+      font-size: 0.6rem;
+      font-family: monospace;
+      font-weight: bold;
+      padding: 2px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .badge-cyan {
+      background: #00e5ff;
+      color: #0d0d2b;
+    }
+
+    .skill-tag {
+      border: 1px solid #ff2d78;
+      color: #ff2d78;
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      background: rgba(255,45,120,0.07);
+    }
+
+    .hp-bar { height: 3px; background: #1a1a40; margin-top: 14px; }
+    .hp-fill { height: 100%; background: #ff2d78; box-shadow: 0 0 6px #ff2d78; }
+  </style>
+
+  <!-- CRT vignette -->
+  <div class="fixed inset-0 -z-10 bg-[#0d0d2b]"></div>
+  <div class="fixed inset-0 pointer-events-none z-40" style="background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.65) 100%);"></div>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0d0d2b] border-b-2 border-[#ff2d78]">
+    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+      <span class="font-mono font-bold text-[#ffe600] tracking-widest uppercase text-sm">{personal.initials}<span class="blink">_</span></span>
+      <div class="flex gap-6 text-xs font-mono text-[#00e5ff]/60">
+        <a href="#about-retro" class="hover:text-[#00e5ff] transition-colors uppercase tracking-wider">About</a>
+        <a href="#work-retro" class="hover:text-[#00e5ff] transition-colors uppercase tracking-wider">Work</a>
+        <a href="#gamedev-retro" class="hover:text-[#00e5ff] transition-colors uppercase tracking-wider">Games</a>
+        <a href="#contact-retro" class="hover:text-[#00e5ff] transition-colors uppercase tracking-wider">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="min-h-screen flex flex-col justify-center px-6 pt-14">
+    <div class="max-w-5xl mx-auto w-full">
+      <div class="badge mb-6">INSERT COIN</div>
+      <h1 class="retro-heading text-5xl md:text-7xl font-black mb-3 leading-tight">
+        Dimitri<br />Berardi
+      </h1>
+      <div class="flex items-center gap-3 mb-8">
+        <span class="text-[#ff2d78] text-xs font-mono">LIVES:</span>
+        <span class="text-[#ff2d78] text-sm">&#9829; &#9829; &#9829;</span>
+        <span class="text-[#1a1a40] text-xs font-mono ml-4">SCORE: 9999</span>
+      </div>
+      <p class="text-[#e8e8f0]/60 font-mono text-sm mb-10 max-w-xl leading-relaxed">{personal.tagline}</p>
+      <div class="flex gap-4 flex-wrap">
+        <a href="#work-retro" class="retro-btn retro-btn-primary">&#9654; Start</a>
+        <a href="#contact-retro" class="retro-btn retro-btn-secondary">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about-retro" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="badge mb-4">LEVEL 01</div>
+      <h2 class="retro-heading text-3xl mb-16">About Me</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="pixel-border p-8 bg-[#0d0d2b]">
+          <div class="badge mb-6">Who I Am</div>
+          {about.who.map(p => <p class="text-[#e8e8f0]/70 font-mono text-sm leading-relaxed mb-4">{p}</p>)}
+        </div>
+        <div class="pixel-border-cyan p-8 bg-[#0d0d2b]">
+          <div class="badge badge-cyan mb-6">My Mission</div>
+          {about.mission.map(p => <p class="text-[#e8e8f0]/70 font-mono text-sm leading-relaxed mb-4">{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="py-24 px-6 bg-[#07071a]">
+    <div class="max-w-5xl mx-auto">
+      <div class="badge mb-4">LEVEL 02</div>
+      <h2 class="retro-heading text-3xl mb-16">Skills</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        {Object.entries(skills).map(([category, items]) => (
+          <div class="pixel-border p-6 bg-[#0d0d2b]">
+            <div class="badge mb-4">{category.replace(/([A-Z])/g, ' $1').trim()}</div>
+            <div class="flex flex-wrap gap-2 mt-2">
+              {items.map(s => <span class="skill-tag">{s}</span>)}
+            </div>
+            <div class="hp-bar"><div class="hp-fill" style={`width: ${Math.min(100, items.length * 14)}%`}></div></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="work-retro" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="badge mb-4">LEVEL 03</div>
+      <h2 class="retro-heading text-3xl mb-16">Experience</h2>
+      <div class="space-y-6">
+        {experience.map(job => (
+          <div class={`p-6 bg-[#0d0d2b] ${job.current ? 'pixel-border' : 'border-2 border-[#1a1a40]'}`}>
+            <div class="flex items-start justify-between gap-4 flex-wrap mb-2">
+              <h3 class="text-sm font-mono font-bold text-[#ffe600] uppercase tracking-wider">{job.title}</h3>
+              <span class="text-xs font-mono text-[#ff2d78] border border-[#ff2d78]/30 px-2 py-0.5">{job.period}</span>
+            </div>
+            <p class={`text-xs font-mono ${job.promotion ? 'mb-1' : 'mb-4'} ${job.current ? 'text-[#ff2d78]' : 'text-[#e8e8f0]/40'}`}>
+              {job.company} · {job.location}
+            </p>
+            {job.promotion && <p class="text-xs font-mono text-[#e8e8f0]/30 mb-4">{job.promotion}</p>}
+            <ul class="text-[#e8e8f0]/60 text-xs font-mono space-y-2 leading-relaxed">
+              {job.bullets.map(b => <li class="flex gap-2"><span class="text-[#ff2d78]">&#9658;</span><span>{b}</span></li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="py-24 px-6 bg-[#07071a]">
+    <div class="max-w-5xl mx-auto">
+      <div class="badge mb-4">LEVEL 04</div>
+      <h2 class="retro-heading text-3xl mb-16">Education</h2>
+      <div class="pixel-border p-6 bg-[#0d0d2b]">
+        <div class="flex items-start justify-between gap-4 flex-wrap mb-2">
+          <h3 class="text-sm font-mono font-bold text-[#ffe600] uppercase">{education.school}</h3>
+          <span class="text-xs font-mono text-[#ff2d78] border border-[#ff2d78]/30 px-2 py-0.5">GRAD {education.graduated}</span>
+        </div>
+        <p class="text-xs font-mono text-[#00e5ff] mb-1">{education.degree} · GPA {education.gpa}</p>
+        <p class="text-[#e8e8f0]/40 text-xs font-mono">{education.minors}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME DEV -->
+  <section id="gamedev-retro" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="badge mb-4">BONUS LEVEL</div>
+      <h2 class="retro-heading text-3xl mb-4">Game Dev</h2>
+      <p class="text-[#e8e8f0]/50 font-mono text-sm mb-16 max-w-xl">{gameDev.description}</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        {gameDev.games.map(game => (
+          <div class="pixel-border-cyan p-6 bg-[#0d0d2b]">
+            <div class="badge badge-cyan mb-3">{game.status}</div>
+            <h3 class="text-sm font-mono font-bold text-[#ffe600] mt-2 mb-3 uppercase">{game.title}</h3>
+            <p class="text-[#e8e8f0]/50 text-xs font-mono leading-relaxed">{game.description}</p>
+          </div>
+        ))}
+        <div class="border-2 border-dashed border-[#1a1a40] p-6 flex flex-col justify-center bg-[#0d0d2b]">
+          <div class="badge mb-3" style="background:#1a1a40; color:#e8e8f0; opacity:0.3;">Coming Soon</div>
+          <h3 class="text-sm font-mono font-bold text-[#e8e8f0]/15 mt-2 uppercase">Next Title<span class="blink">_</span></h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOBBIES -->
+  <section id="hobbies-retro" class="py-24 px-6 bg-[#07071a]">
+    <div class="max-w-5xl mx-auto">
+      <div class="badge mb-4">SIDE QUESTS</div>
+      <h2 class="retro-heading text-3xl mb-4">Hobbies</h2>
+      <p class="text-[#e8e8f0]/40 font-mono text-sm mb-16">When I'm not at a keyboard.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {hobbies.map(({ label, icon }) => (
+          <div class="pixel-border p-6 bg-[#0d0d2b] flex items-center gap-4">
+            <span class="text-2xl">{icon}</span>
+            <span class="text-[#e8e8f0]/80 font-mono text-xs uppercase tracking-wider">{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact-retro" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="badge mb-4">CONTINUE?</div>
+      <h2 class="retro-heading text-3xl mb-4">Get In Touch</h2>
+      <p class="text-[#e8e8f0]/50 font-mono text-sm mb-12 max-w-xl">Whether it's a project, a job, or just a conversation - I'm open to it.</p>
+      <div class="flex gap-4 flex-wrap">
+        <a href={`mailto:${personal.email}`} class="retro-btn retro-btn-primary">&#9654; Email Me</a>
+        <a href={personal.github} target="_blank" rel="noopener noreferrer" class="retro-btn retro-btn-secondary">GitHub</a>
+        <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" class="retro-btn retro-btn-secondary">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 px-6 border-t-2 border-[#ff2d78]/20">
+    <div class="max-w-5xl mx-auto flex items-center justify-between text-xs font-mono text-[#e8e8f0]/20">
+      <span>© {personal.copyright}</span>
+      <span>BUILT WITH ASTRO + TAILWIND</span>
+    </div>
+  </footer>
+
+  <SkinDrawer current="Retro" />
+</Layout>
