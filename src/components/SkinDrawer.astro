@@ -1,0 +1,88 @@
+---
+interface Props {
+  current: string;
+}
+const { current } = Astro.props;
+
+const skins = [
+  { label: 'Dark',          href: '/',                  built: true, desc: 'Clean dark with emerald' },
+  { label: 'Aurora',        href: '/preview/glass',     built: true, desc: 'Mesh gradients, dark glow' },
+  { label: 'Bold',          href: '/preview/bold',      built: true, desc: 'Saturated gradients, Y2K energy' },
+  { label: 'Earthy',        href: '/preview/earthy',    built: true, desc: 'Muted tones, organic minimalism' },
+  { label: '3D / Motion',   href: '/preview/motion',    built: true, desc: 'Scroll animations, immersive' },
+  { label: 'Neobrutalist',  href: '/preview/brutalist', built: true, desc: 'Bold type, stark contrast' },
+];
+---
+
+<!-- Toggle button -->
+<button
+  id="skin-toggle"
+  aria-label="Switch skin"
+  class="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-black/70 backdrop-blur-xl border border-white/20 text-white text-sm font-medium shadow-2xl hover:bg-black/80 transition-colors"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
+  Skin: {current}
+</button>
+
+<!-- Backdrop -->
+<div id="skin-backdrop" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden"></div>
+
+<!-- Drawer -->
+<div
+  id="skin-drawer"
+  class="fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-xl border-t border-white/10 rounded-t-2xl shadow-2xl translate-y-full transition-transform duration-300 ease-out"
+>
+  <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/10">
+    <span class="text-white font-semibold">Design Skins</span>
+    <button id="skin-close" class="text-slate-400 hover:text-white transition-colors text-sm">Close</button>
+  </div>
+  <div class="p-4 grid grid-cols-2 gap-3 pb-8">
+    {skins.map(skin => (
+      skin.built
+        ? (
+          <a
+            href={skin.href}
+            class={`flex flex-col gap-1 p-4 rounded-xl border transition-colors ${
+              skin.label === current
+                ? 'bg-white/10 border-white/30 text-white'
+                : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            <span class="font-medium text-sm">{skin.label}</span>
+            <span class="text-xs opacity-60">{skin.desc}</span>
+            {skin.label === current && <span class="text-xs text-emerald-400 mt-1">Current</span>}
+          </a>
+        )
+        : (
+          <div class="flex flex-col gap-1 p-4 rounded-xl border border-white/5 bg-white/[0.02] opacity-50 cursor-not-allowed">
+            <span class="font-medium text-sm text-slate-500">{skin.label}</span>
+            <span class="text-xs text-slate-600">{skin.desc}</span>
+            <span class="text-xs text-slate-600 mt-1">Coming soon</span>
+          </div>
+        )
+    ))}
+  </div>
+</div>
+
+<script>
+  const toggle = document.getElementById('skin-toggle')!;
+  const drawer = document.getElementById('skin-drawer')!;
+  const backdrop = document.getElementById('skin-backdrop')!;
+  const close = document.getElementById('skin-close')!;
+
+  function open() {
+    drawer.classList.remove('translate-y-full');
+    backdrop.classList.remove('hidden');
+  }
+
+  function shut() {
+    drawer.classList.add('translate-y-full');
+    backdrop.classList.add('hidden');
+  }
+
+  toggle.addEventListener('click', open);
+  close.addEventListener('click', shut);
+  backdrop.addEventListener('click', shut);
+</script>

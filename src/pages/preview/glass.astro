@@ -1,0 +1,187 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SkinDrawer from '../../components/SkinDrawer.astro';
+import { personal, about, skills, experience, education, gameDev, hobbies } from '../../data/content';
+---
+
+<Layout>
+
+  <!-- Mesh gradient background -->
+  <div class="fixed inset-0 -z-10 bg-[#06061a]"></div>
+  <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-violet-600/25 blur-[120px]"></div>
+    <div class="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full bg-cyan-500/20 blur-[120px]"></div>
+    <div class="absolute bottom-0 left-1/4 w-[500px] h-[500px] rounded-full bg-fuchsia-600/20 blur-[120px]"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/5 backdrop-blur-xl border-b border-white/10">
+    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+      <span class="font-semibold tracking-tight text-cyan-400">{personal.initials}</span>
+      <div class="flex gap-6 text-sm text-white/50">
+        <a href="#about-aurora" class="hover:text-white transition-colors">About</a>
+        <a href="#work-aurora" class="hover:text-white transition-colors">Work</a>
+        <a href="#gamedev-aurora" class="hover:text-white transition-colors">Game Dev</a>
+        <a href="#hobbies-aurora" class="hover:text-white transition-colors">Hobbies</a>
+        <a href="#contact-aurora" class="hover:text-white transition-colors">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="min-h-screen flex flex-col justify-center px-6 pt-14">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="text-cyan-400 text-sm font-medium tracking-widest uppercase mb-4">Hey, I'm</p>
+      <h1 class="text-6xl md:text-8xl font-bold tracking-tight text-white mb-6">
+        Dimitri<br />Berardi
+      </h1>
+      <p class="text-xl md:text-2xl text-white/50 mb-10 max-w-xl">{personal.tagline}</p>
+      <div class="flex gap-4 flex-wrap">
+        <a href="#work-aurora" class="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-[#06061a] font-semibold rounded-lg transition-colors shadow-lg shadow-cyan-500/30">
+          View My Work
+        </a>
+        <a href="#contact-aurora" class="px-6 py-3 bg-white/5 hover:bg-white/10 backdrop-blur border border-white/15 text-white/80 hover:text-white font-semibold rounded-lg transition-colors">
+          Get In Touch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about-aurora" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-16 text-white">About Me</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8">
+          <h3 class="text-cyan-400 text-sm font-medium tracking-widest uppercase mb-4">Who I Am</h3>
+          {about.who.map(p => <p class="text-white/60 leading-relaxed mb-4">{p}</p>)}
+        </div>
+        <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8">
+          <h3 class="text-violet-400 text-sm font-medium tracking-widest uppercase mb-4">My Mission</h3>
+          {about.mission.map(p => <p class="text-white/60 leading-relaxed mb-4">{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-16 text-white">Skills</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        {Object.entries(skills).map(([category, items]) => (
+          <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6">
+            <h3 class="text-cyan-400 text-sm font-medium tracking-widest uppercase mb-4">
+              {category.replace(/([A-Z])/g, ' $1').trim()}
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {items.map(s => (
+                <span class="px-3 py-1 bg-white/8 text-white/70 rounded-md text-sm border border-white/10">{s}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="work-aurora" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-16 text-white">Experience</h2>
+      <div class="space-y-6">
+        {experience.map(job => (
+          <div class={`bg-white/5 backdrop-blur-md border rounded-2xl p-6 ${job.current ? 'border-cyan-500/40' : 'border-white/10'}`}>
+            <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
+              <h3 class="text-lg font-semibold text-white">{job.title}</h3>
+              <span class="text-sm text-white/40">{job.period}</span>
+            </div>
+            <p class={`text-sm ${job.promotion ? 'mb-1' : 'mb-4'} ${job.current ? 'text-cyan-400' : 'text-white/40'}`}>
+              {job.company} · {job.location}
+            </p>
+            {job.promotion && <p class="text-xs text-white/30 mb-4">{job.promotion}</p>}
+            <ul class="text-white/50 text-sm space-y-2 list-disc list-inside leading-relaxed">
+              {job.bullets.map(b => <li>{b}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-16 text-white">Education</h2>
+      <div class="bg-white/5 backdrop-blur-md border border-cyan-500/40 rounded-2xl p-6">
+        <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
+          <h3 class="text-lg font-semibold text-white">{education.school}</h3>
+          <span class="text-sm text-white/40">Graduated {education.graduated}</span>
+        </div>
+        <p class="text-cyan-400 text-sm mb-1">{education.degree} · GPA {education.gpa}</p>
+        <p class="text-white/40 text-sm">{education.minors}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME DEV -->
+  <section id="gamedev-aurora" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4 text-white">Game Dev</h2>
+      <p class="text-white/50 mb-16 max-w-xl">{gameDev.description}</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        {gameDev.games.map(game => (
+          <div class="bg-white/5 backdrop-blur-md border border-violet-500/30 rounded-2xl p-6">
+            <span class="text-xs font-medium text-violet-400 tracking-widest uppercase">{game.status}</span>
+            <h3 class="text-xl font-semibold text-white mt-2 mb-3">{game.title}</h3>
+            <p class="text-white/50 text-sm leading-relaxed">{game.description}</p>
+          </div>
+        ))}
+        <div class="bg-white/[0.02] border border-dashed border-white/10 rounded-2xl p-6 flex flex-col justify-center">
+          <span class="text-xs font-medium text-white/20 tracking-widest uppercase">Coming Soon</span>
+          <h3 class="text-xl font-semibold text-white/15 mt-2">Next Title</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOBBIES -->
+  <section id="hobbies-aurora" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4 text-white">Hobbies & Interests</h2>
+      <p class="text-white/50 mb-16 max-w-xl">When I'm not at a keyboard.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {hobbies.map(({ label, icon }) => (
+          <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 flex items-center gap-4">
+            <span class="text-2xl">{icon}</span>
+            <span class="text-white/80 font-medium">{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact-aurora" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4 text-white">Get In Touch</h2>
+      <p class="text-white/50 mb-12 max-w-xl">Whether it's a project, a job, or just a conversation - I'm open to it.</p>
+      <div class="flex gap-4 flex-wrap">
+        <a href={`mailto:${personal.email}`} class="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-[#06061a] font-semibold rounded-lg transition-colors shadow-lg shadow-cyan-500/30">Email Me</a>
+        <a href={personal.github} target="_blank" rel="noopener noreferrer" class="px-6 py-3 bg-white/5 hover:bg-white/10 backdrop-blur border border-white/15 text-white/80 hover:text-white font-semibold rounded-lg transition-colors">GitHub</a>
+        <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" class="px-6 py-3 bg-white/5 hover:bg-white/10 backdrop-blur border border-white/15 text-white/80 hover:text-white font-semibold rounded-lg transition-colors">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 px-6 border-t border-white/10">
+    <div class="max-w-5xl mx-auto flex items-center justify-between text-sm text-white/30">
+      <span>© {personal.copyright}</span>
+      <span>Built with Astro + Tailwind</span>
+    </div>
+  </footer>
+
+  <SkinDrawer current="Aurora" />
+
+</Layout>

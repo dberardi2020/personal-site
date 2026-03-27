@@ -1,0 +1,209 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SkinDrawer from '../../components/SkinDrawer.astro';
+import { personal, about, skills, experience, education, gameDev, hobbies } from '../../data/content';
+---
+
+<Layout>
+  <style>
+    body { background-color: #FAFAF5; color: #0A0A0A; }
+
+    .brute-card {
+      border: 2px solid #0A0A0A;
+      box-shadow: 4px 4px 0px #0A0A0A;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    .brute-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px #0A0A0A;
+    }
+
+    .brute-btn {
+      border: 2px solid #0A0A0A;
+      box-shadow: 4px 4px 0px #0A0A0A;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    .brute-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px #0A0A0A;
+    }
+    .brute-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px #0A0A0A;
+    }
+  </style>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[#FAFAF5] border-b-2 border-black">
+    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+      <span class="font-black text-lg tracking-tighter">{personal.initials}</span>
+      <div class="flex gap-6 text-sm font-bold text-stone-400">
+        <a href="#about-brute" class="hover:text-black transition-colors uppercase tracking-wide text-xs">About</a>
+        <a href="#work-brute" class="hover:text-black transition-colors uppercase tracking-wide text-xs">Work</a>
+        <a href="#gamedev-brute" class="hover:text-black transition-colors uppercase tracking-wide text-xs">Games</a>
+        <a href="#hobbies-brute" class="hover:text-black transition-colors uppercase tracking-wide text-xs">Life</a>
+        <a href="#contact-brute" class="hover:text-black transition-colors uppercase tracking-wide text-xs">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="min-h-screen flex flex-col justify-center px-6 pt-14 border-b-2 border-black">
+    <div class="max-w-5xl mx-auto w-full">
+      <div class="inline-block bg-yellow-400 border-2 border-black px-3 py-1 text-xs font-black uppercase tracking-widest mb-8">
+        Hey, I'm
+      </div>
+      <h1 class="text-7xl md:text-[10rem] font-black tracking-tighter leading-none mb-8 text-black">
+        Dimitri<br />Berardi
+      </h1>
+      <p class="text-xl text-stone-600 mb-12 max-w-2xl leading-relaxed font-medium border-l-4 border-yellow-400 pl-6">
+        {personal.tagline}
+      </p>
+      <div class="flex gap-4 flex-wrap">
+        <a href="#work-brute" class="brute-btn px-6 py-3 bg-yellow-400 text-black font-black uppercase tracking-wide text-sm rounded-none">
+          View My Work →
+        </a>
+        <a href="#contact-brute" class="brute-btn px-6 py-3 bg-white text-black font-black uppercase tracking-wide text-sm rounded-none">
+          Get In Touch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about-brute" class="py-24 px-6 border-b-2 border-black">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black mb-16 uppercase tracking-tighter">About Me</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="brute-card p-8 bg-white">
+          <div class="inline-block bg-yellow-400 border border-black px-2 py-0.5 text-xs font-black uppercase tracking-widest mb-6">Who I Am</div>
+          {about.who.map(p => <p class="text-stone-700 leading-relaxed mb-4">{p}</p>)}
+        </div>
+        <div class="brute-card p-8 bg-white">
+          <div class="inline-block bg-black text-white px-2 py-0.5 text-xs font-black uppercase tracking-widest mb-6">My Mission</div>
+          {about.mission.map(p => <p class="text-stone-700 leading-relaxed mb-4">{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="py-24 px-6 bg-yellow-400 border-b-2 border-black">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black mb-16 uppercase tracking-tighter">Skills</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        {Object.entries(skills).map(([category, items]) => (
+          <div class="brute-card p-6 bg-[#FAFAF5]">
+            <div class="inline-block bg-black text-yellow-400 px-2 py-0.5 text-xs font-black uppercase tracking-widest mb-4">
+              {category.replace(/([A-Z])/g, ' $1').trim()}
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {items.map(s => (
+                <span class="px-3 py-1 bg-white border-2 border-black text-black text-sm font-bold">{s}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="work-brute" class="py-24 px-6 border-b-2 border-black">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black mb-16 uppercase tracking-tighter">Experience</h2>
+      <div class="space-y-6">
+        {experience.map((job, i) => (
+          <div class={`brute-card p-6 ${job.current ? 'bg-yellow-400' : 'bg-white'}`}>
+            <div class="flex items-start justify-between gap-4 flex-wrap mb-2">
+              <h3 class="text-lg font-black uppercase tracking-tight">{job.title}</h3>
+              <span class="text-sm font-mono font-bold border border-black px-2 py-0.5">{job.period}</span>
+            </div>
+            <p class={`text-sm font-bold ${job.promotion ? 'mb-1' : 'mb-4'} uppercase tracking-wide`}>
+              {job.company} · {job.location}
+            </p>
+            {job.promotion && <p class="text-xs text-stone-500 mb-4">{job.promotion}</p>}
+            <ul class="text-stone-700 text-sm space-y-2 list-disc list-inside leading-relaxed">
+              {job.bullets.map(b => <li>{b}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="py-24 px-6 border-b-2 border-black">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black mb-16 uppercase tracking-tighter">Education</h2>
+      <div class="brute-card p-6 bg-white">
+        <div class="flex items-start justify-between gap-4 flex-wrap mb-2">
+          <h3 class="text-lg font-black uppercase tracking-tight">{education.school}</h3>
+          <span class="text-sm font-mono font-bold border border-black px-2 py-0.5">Graduated {education.graduated}</span>
+        </div>
+        <p class="text-sm font-bold mb-1 uppercase tracking-wide">{education.degree} · GPA {education.gpa}</p>
+        <p class="text-stone-500 text-sm">{education.minors}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME DEV -->
+  <section id="gamedev-brute" class="py-24 px-6 border-b-2 border-black bg-black text-white">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black mb-4 uppercase tracking-tighter text-yellow-400">Game Dev</h2>
+      <p class="text-stone-400 mb-16 max-w-xl">{gameDev.description}</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        {gameDev.games.map(game => (
+          <div class="border-2 border-yellow-400 p-6" style="box-shadow: 4px 4px 0px #facc15;">
+            <span class="text-xs font-black text-yellow-400 tracking-widest uppercase">{game.status}</span>
+            <h3 class="text-xl font-black text-white mt-2 mb-3 uppercase">{game.title}</h3>
+            <p class="text-stone-400 text-sm leading-relaxed">{game.description}</p>
+          </div>
+        ))}
+        <div class="border-2 border-dashed border-stone-700 p-6 flex flex-col justify-center">
+          <span class="text-xs font-black text-stone-600 tracking-widest uppercase">Coming Soon</span>
+          <h3 class="text-xl font-black text-stone-700 mt-2 uppercase">Next Title</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOBBIES -->
+  <section id="hobbies-brute" class="py-24 px-6 border-b-2 border-black">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black mb-4 uppercase tracking-tighter">Life</h2>
+      <p class="text-stone-500 mb-16 font-medium">When I'm not at a keyboard.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {hobbies.map(({ label, icon }) => (
+          <div class="brute-card p-6 bg-white flex items-center gap-4">
+            <span class="text-2xl">{icon}</span>
+            <span class="font-black uppercase text-sm tracking-wide">{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact-brute" class="py-24 px-6 border-b-2 border-black">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black mb-4 uppercase tracking-tighter">Get In Touch</h2>
+      <p class="text-stone-500 mb-12 max-w-xl font-medium">Whether it's a project, a job, or just a conversation — I'm open to it.</p>
+      <div class="flex gap-4 flex-wrap">
+        <a href={`mailto:${personal.email}`} class="brute-btn px-6 py-3 bg-yellow-400 text-black font-black uppercase tracking-wide text-sm rounded-none">Email Me →</a>
+        <a href={personal.github} target="_blank" rel="noopener noreferrer" class="brute-btn px-6 py-3 bg-white text-black font-black uppercase tracking-wide text-sm rounded-none">GitHub</a>
+        <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" class="brute-btn px-6 py-3 bg-white text-black font-black uppercase tracking-wide text-sm rounded-none">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 px-6 border-t-2 border-black">
+    <div class="max-w-5xl mx-auto flex items-center justify-between text-sm font-bold text-stone-400">
+      <span>© {personal.copyright}</span>
+      <span class="font-mono">Built with Astro + Tailwind</span>
+    </div>
+  </footer>
+
+  <SkinDrawer current="Neobrutalist" />
+</Layout>

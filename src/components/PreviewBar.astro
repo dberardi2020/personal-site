@@ -1,0 +1,27 @@
+---
+interface Props {
+  current: string;
+}
+const { current } = Astro.props;
+
+const skins = [
+  { label: 'Dark',  href: '/' },
+  { label: 'Glass', href: '/preview/glass' },
+];
+---
+
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 px-2 py-2 rounded-full shadow-2xl border border-white/20 bg-black/60 backdrop-blur-xl text-sm">
+  <span class="px-3 text-white/40 text-xs font-medium tracking-widest uppercase">Skin</span>
+  {skins.map(skin => (
+    <a
+      href={skin.href}
+      class={`px-4 py-1.5 rounded-full font-medium transition-colors ${
+        skin.label === current
+          ? 'bg-white text-black'
+          : 'text-white/60 hover:text-white'
+      }`}
+    >
+      {skin.label}
+    </a>
+  ))}
+</div>

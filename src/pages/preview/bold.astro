@@ -1,0 +1,195 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SkinDrawer from '../../components/SkinDrawer.astro';
+import { personal, about, skills, experience, education, gameDev, hobbies } from '../../data/content';
+---
+
+<Layout>
+  <style>
+    .gradient-text {
+      background: linear-gradient(135deg, #f472b6, #fb923c, #facc15);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-border {
+      background: linear-gradient(#09090b, #09090b) padding-box,
+                  linear-gradient(135deg, #f472b6, #fb923c, #facc15) border-box;
+      border: 2px solid transparent;
+    }
+  </style>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/90 backdrop-blur-sm border-b border-zinc-800">
+    <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+      <span class="font-black text-lg gradient-text">{personal.initials}</span>
+      <div class="flex gap-6 text-sm text-zinc-500">
+        <a href="#about-bold" class="hover:text-white transition-colors">About</a>
+        <a href="#work-bold" class="hover:text-white transition-colors">Work</a>
+        <a href="#gamedev-bold" class="hover:text-white transition-colors">Game Dev</a>
+        <a href="#hobbies-bold" class="hover:text-white transition-colors">Hobbies</a>
+        <a href="#contact-bold" class="hover:text-white transition-colors">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="min-h-screen flex flex-col justify-center px-6 pt-14 bg-zinc-950">
+    <div class="max-w-5xl mx-auto w-full">
+      <p class="text-pink-500 text-sm font-bold tracking-widest uppercase mb-6">Hey, I'm</p>
+      <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-none mb-8">
+        <span class="gradient-text">Dimitri<br />Berardi</span>
+      </h1>
+      <p class="text-xl text-zinc-400 mb-12 max-w-xl leading-relaxed">{personal.tagline}</p>
+      <div class="flex gap-4 flex-wrap">
+        <a href="#work-bold" class="px-8 py-3 bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 text-black font-black rounded-full transition-opacity hover:opacity-90 shadow-lg shadow-pink-900/40">
+          View My Work
+        </a>
+        <a href="#contact-bold" class="px-8 py-3 border border-zinc-700 hover:border-pink-500 text-zinc-300 hover:text-white font-bold rounded-full transition-colors">
+          Get In Touch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about-bold" class="py-24 px-6 bg-zinc-950">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black text-white mb-16 tracking-tight">About Me</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="gradient-border rounded-2xl p-8">
+          <h3 class="text-pink-400 text-xs font-bold tracking-widest uppercase mb-4">Who I Am</h3>
+          {about.who.map(p => <p class="text-zinc-300 leading-relaxed mb-4">{p}</p>)}
+        </div>
+        <div class="gradient-border rounded-2xl p-8">
+          <h3 class="text-orange-400 text-xs font-bold tracking-widest uppercase mb-4">My Mission</h3>
+          {about.mission.map(p => <p class="text-zinc-300 leading-relaxed mb-4">{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="py-24 px-6 bg-zinc-950">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black text-white mb-16 tracking-tight">Skills</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        {Object.entries(skills).map(([category, items], i) => {
+          const colors = ['pink', 'orange', 'yellow', 'rose'];
+          const color = colors[i % colors.length];
+          return (
+            <div>
+              <h3 class={`text-${color}-400 text-xs font-bold tracking-widest uppercase mb-4`}>
+                {category.replace(/([A-Z])/g, ' $1').trim()}
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                {items.map(s => (
+                  <span class={`px-3 py-1 bg-${color}-500/10 text-${color}-300 rounded-full text-sm border border-${color}-500/30 font-medium`}>{s}</span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="work-bold" class="py-24 px-6 bg-zinc-950">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black text-white mb-16 tracking-tight">Experience</h2>
+      <div class="space-y-6">
+        {experience.map((job, i) => (
+          <div class="gradient-border rounded-2xl p-6">
+            <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
+              <h3 class="text-lg font-black text-white">{job.title}</h3>
+              <span class="text-sm text-zinc-500 font-mono">{job.period}</span>
+            </div>
+            <p class={`text-sm ${job.promotion ? 'mb-1' : 'mb-4'} font-bold ${job.current ? 'gradient-text' : 'text-zinc-500'}`}>
+              {job.company} · {job.location}
+            </p>
+            {job.promotion && <p class="text-xs text-zinc-600 mb-4">{job.promotion}</p>}
+            <ul class="text-zinc-400 text-sm space-y-2 list-disc list-inside leading-relaxed">
+              {job.bullets.map(b => <li>{b}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="py-24 px-6 bg-zinc-950">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black text-white mb-16 tracking-tight">Education</h2>
+      <div class="gradient-border rounded-2xl p-6">
+        <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
+          <h3 class="text-lg font-black text-white">{education.school}</h3>
+          <span class="text-sm text-zinc-500 font-mono">Graduated {education.graduated}</span>
+        </div>
+        <p class="gradient-text text-sm font-bold mb-1">{education.degree} · GPA {education.gpa}</p>
+        <p class="text-zinc-500 text-sm">{education.minors}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME DEV -->
+  <section id="gamedev-bold" class="py-24 px-6 bg-zinc-950">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black text-white mb-4 tracking-tight">Game Dev</h2>
+      <p class="text-zinc-400 mb-16 max-w-xl">{gameDev.description}</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        {gameDev.games.map(game => (
+          <div class="gradient-border rounded-2xl p-6">
+            <span class="text-xs font-bold text-pink-400 tracking-widest uppercase">{game.status}</span>
+            <h3 class="text-xl font-black text-white mt-2 mb-3">{game.title}</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">{game.description}</p>
+          </div>
+        ))}
+        <div class="border-2 border-dashed border-zinc-800 rounded-2xl p-6 flex flex-col justify-center">
+          <span class="text-xs font-bold text-zinc-600 tracking-widest uppercase">Coming Soon</span>
+          <h3 class="text-xl font-black text-zinc-700 mt-2">Next Title</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOBBIES -->
+  <section id="hobbies-bold" class="py-24 px-6 bg-zinc-950">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black text-white mb-4 tracking-tight">Hobbies & Interests</h2>
+      <p class="text-zinc-400 mb-16 max-w-xl">When I'm not at a keyboard.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {hobbies.map(({ label, icon }) => (
+          <div class="gradient-border rounded-2xl p-6 flex items-center gap-4">
+            <span class="text-2xl">{icon}</span>
+            <span class="text-white font-bold">{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact-bold" class="py-24 px-6 bg-zinc-950">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-5xl font-black text-white mb-4 tracking-tight">Get In Touch</h2>
+      <p class="text-zinc-400 mb-12 max-w-xl">Whether it's a project, a job, or just a conversation — I'm open to it.</p>
+      <div class="flex gap-4 flex-wrap">
+        <a href={`mailto:${personal.email}`} class="px-8 py-3 bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 text-black font-black rounded-full hover:opacity-90 transition-opacity shadow-lg shadow-pink-900/40">Email Me</a>
+        <a href={personal.github} target="_blank" rel="noopener noreferrer" class="px-8 py-3 border border-zinc-700 hover:border-pink-500 text-zinc-300 hover:text-white font-bold rounded-full transition-colors">GitHub</a>
+        <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" class="px-8 py-3 border border-zinc-700 hover:border-orange-500 text-zinc-300 hover:text-white font-bold rounded-full transition-colors">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 px-6 border-t border-zinc-800 bg-zinc-950">
+    <div class="max-w-5xl mx-auto flex items-center justify-between text-sm text-zinc-600">
+      <span>© {personal.copyright}</span>
+      <span class="font-mono">Built with Astro + Tailwind</span>
+    </div>
+  </footer>
+
+  <SkinDrawer current="Bold" />
+</Layout>
