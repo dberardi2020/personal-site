@@ -25,7 +25,7 @@ const { current } = Astro.props;
 <!-- Drawer -->
 <div
   id="skin-drawer"
-  class="fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-xl border-t border-white/10 rounded-t-2xl shadow-2xl translate-y-full transition-transform duration-300 ease-out"
+  class="fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-xl border-t border-white/10 rounded-t-2xl shadow-2xl translate-y-full invisible transition-transform duration-300 ease-out"
 >
   <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/10">
     <span class="text-white font-semibold">Design Skins</span>
@@ -60,6 +60,7 @@ const { current } = Astro.props;
   const close = document.getElementById('skin-close')!;
 
   function open() {
+    drawer.classList.remove('invisible');
     drawer.classList.remove('translate-y-full');
     backdrop.classList.remove('hidden');
   }
@@ -67,6 +68,9 @@ const { current } = Astro.props;
   function shut() {
     drawer.classList.add('translate-y-full');
     backdrop.classList.add('hidden');
+    drawer.addEventListener('transitionend', () => {
+      drawer.classList.add('invisible');
+    }, { once: true });
   }
 
   toggle.addEventListener('click', open);
