@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SkinDrawer from '../components/SkinDrawer.astro';
+import PromotionGroup from '../components/PromotionGroup.astro';
 import { personal, about, skills, experience, education, gameDev, hobbies } from '../data/content';
 ---
 
@@ -90,20 +91,34 @@ import { personal, about, skills, experience, education, gameDev, hobbies } from
     <div class="max-w-5xl mx-auto">
       <h2 class="text-3xl font-bold mb-16 text-white">Experience</h2>
       <div class="space-y-6">
-        {experience.map(job => (
-          <div class={`bg-white/5 backdrop-blur-md border rounded-2xl p-6 ${job.current ? 'border-cyan-500/40' : 'border-white/10'}`}>
-            <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
-              <h3 class="text-lg font-semibold text-white">{job.title}</h3>
-              <span class="text-sm text-white/40">{job.period}</span>
+        {experience.map(entry => (
+          entry.type === 'promotion' ? (
+            <div class={`bg-white/5 backdrop-blur-md border rounded-2xl p-6 ${entry.current ? 'border-cyan-500/40' : 'border-white/10'}`}>
+              <PromotionGroup
+                group={entry}
+                titleClass="text-lg font-semibold text-white"
+                companyClass={entry.current ? 'text-cyan-400' : 'text-white/40'}
+                periodClass="text-sm text-white/40"
+                bulletClass="text-white/50"
+                prevRoleClass="text-white/40"
+                connectorLineClass="border-white/10"
+                badgeClass="text-white/30 border border-white/10"
+              />
             </div>
-            <p class={`text-sm ${job.promotion ? 'mb-1' : 'mb-4'} ${job.current ? 'text-cyan-400' : 'text-white/40'}`}>
-              {job.company} · {job.location}
-            </p>
-            {job.promotion && <p class="text-xs text-white/30 mb-4">{job.promotion}</p>}
-            <ul class="text-white/50 text-sm space-y-2 list-disc list-inside leading-relaxed">
-              {job.bullets.map(b => <li>{b}</li>)}
-            </ul>
-          </div>
+          ) : (
+            <div class={`bg-white/5 backdrop-blur-md border rounded-2xl p-6 ${entry.current ? 'border-cyan-500/40' : 'border-white/10'}`}>
+              <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
+                <h3 class="text-lg font-semibold text-white">{entry.title}</h3>
+                <span class="text-sm text-white/40">{entry.period}</span>
+              </div>
+              <p class={`text-sm mb-4 ${entry.current ? 'text-cyan-400' : 'text-white/40'}`}>
+                {entry.company} · {entry.location}
+              </p>
+              <ul class="text-white/50 text-sm space-y-2 list-disc list-inside leading-relaxed">
+                {entry.bullets.map(b => <li>{b}</li>)}
+              </ul>
+            </div>
+          )
         ))}
       </div>
     </div>

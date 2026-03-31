@@ -1,0 +1,42 @@
+---
+import type { PromotionGroup } from '../data/content';
+
+interface Props {
+  group: PromotionGroup;
+  titleClass: string;
+  companyClass: string;
+  periodClass: string;
+  bulletClass: string;
+  prevRoleClass: string;
+  connectorLineClass: string;
+  badgeClass: string;
+}
+
+const { group, titleClass, companyClass, periodClass, bulletClass, prevRoleClass, connectorLineClass, badgeClass } = Astro.props;
+const [current, ...previous] = group.roles;
+---
+
+<div class="flex items-start justify-between gap-4 flex-wrap mb-1">
+  <h3 class={titleClass}>{current.title}</h3>
+  <span class={periodClass}>{current.period}</span>
+</div>
+<p class={`text-sm mb-3 ${companyClass}`}>{group.company} · {group.location}</p>
+{current.bullets.length > 0 && (
+  <ul class={`text-sm space-y-2 list-disc list-inside leading-relaxed mb-4 ${bulletClass}`}>
+    {current.bullets.map(b => <li>{b}</li>)}
+  </ul>
+)}
+
+{previous.map(role => (
+  <div>
+    <div class="flex items-center gap-3 mb-3">
+      <div class={`flex-1 border-t border-dashed ${connectorLineClass}`}></div>
+      <span class={`text-xs px-2 py-0.5 rounded ${badgeClass}`}>Promoted</span>
+      <div class={`flex-1 border-t border-dashed ${connectorLineClass}`}></div>
+    </div>
+    <div class="flex items-start justify-between gap-4 flex-wrap">
+      <span class={`text-sm font-medium ${prevRoleClass}`}>{role.title}</span>
+      <span class={periodClass}>{role.period}</span>
+    </div>
+  </div>
+))}

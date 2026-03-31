@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SkinDrawer from '../components/SkinDrawer.astro';
+import PromotionGroup from '../components/PromotionGroup.astro';
 import { personal, about, skills, experience, education, gameDev, hobbies } from '../data/content';
 ---
 
@@ -172,20 +173,34 @@ import { personal, about, skills, experience, education, gameDev, hobbies } from
       <div class="badge mb-4">LEVEL 03</div>
       <h2 class="retro-heading text-3xl mb-16">Experience</h2>
       <div class="space-y-6">
-        {experience.map(job => (
-          <div class={`p-6 bg-[#0d0d2b] ${job.current ? 'pixel-border' : 'border-2 border-[#1a1a40]'}`}>
-            <div class="flex items-start justify-between gap-4 flex-wrap mb-2">
-              <h3 class="text-sm font-mono font-bold text-[#ffe600] uppercase tracking-wider">{job.title}</h3>
-              <span class="text-xs font-mono text-[#ff2d78] border border-[#ff2d78]/30 px-2 py-0.5">{job.period}</span>
+        {experience.map(entry => (
+          entry.type === 'promotion' ? (
+            <div class={`p-6 bg-[#0d0d2b] ${entry.current ? 'pixel-border' : 'border-2 border-[#1a1a40]'}`}>
+              <PromotionGroup
+                group={entry}
+                titleClass="text-sm font-mono font-bold text-[#ffe600] uppercase tracking-wider"
+                companyClass={entry.current ? 'text-[#ff2d78] font-mono text-xs' : 'text-[#e8e8f0]/40 font-mono text-xs'}
+                periodClass="text-xs font-mono text-[#ff2d78]"
+                bulletClass="text-[#e8e8f0]/60 font-mono text-xs"
+                prevRoleClass="text-[#e8e8f0]/40 font-mono uppercase tracking-wider"
+                connectorLineClass="border-[#ff2d78]/20"
+                badgeClass="text-[#e8e8f0]/30 font-mono border border-[#ff2d78]/20"
+              />
             </div>
-            <p class={`text-xs font-mono ${job.promotion ? 'mb-1' : 'mb-4'} ${job.current ? 'text-[#ff2d78]' : 'text-[#e8e8f0]/40'}`}>
-              {job.company} · {job.location}
-            </p>
-            {job.promotion && <p class="text-xs font-mono text-[#e8e8f0]/30 mb-4">{job.promotion}</p>}
-            <ul class="text-[#e8e8f0]/60 text-xs font-mono space-y-2 leading-relaxed">
-              {job.bullets.map(b => <li class="flex gap-2"><span class="text-[#ff2d78]">&#9658;</span><span>{b}</span></li>)}
-            </ul>
-          </div>
+          ) : (
+            <div class={`p-6 bg-[#0d0d2b] ${entry.current ? 'pixel-border' : 'border-2 border-[#1a1a40]'}`}>
+              <div class="flex items-start justify-between gap-4 flex-wrap mb-2">
+                <h3 class="text-sm font-mono font-bold text-[#ffe600] uppercase tracking-wider">{entry.title}</h3>
+                <span class="text-xs font-mono text-[#ff2d78] border border-[#ff2d78]/30 px-2 py-0.5">{entry.period}</span>
+              </div>
+              <p class={`text-xs font-mono mb-4 ${entry.current ? 'text-[#ff2d78]' : 'text-[#e8e8f0]/40'}`}>
+                {entry.company} · {entry.location}
+              </p>
+              <ul class="text-[#e8e8f0]/60 text-xs font-mono space-y-2 leading-relaxed">
+                {entry.bullets.map(b => <li class="flex gap-2"><span class="text-[#ff2d78]">&#9658;</span><span>{b}</span></li>)}
+              </ul>
+            </div>
+          )
         ))}
       </div>
     </div>
