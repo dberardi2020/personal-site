@@ -7,25 +7,33 @@ import { personal, about, skills, experience, education, gameDev, hobbies } from
 
 <Layout>
   <style is:global>
-    body { background-color: #000; color: #00ff41; font-family: 'Courier New', Courier, monospace; }
-
-    .m-bright  { color: #39ff14; text-shadow: 0 0 8px #39ff14; }
-    .m-text    { color: #00ff41; }
-    .m-mid     { color: #00cc33; }
-    .m-dim     { color: #003b00; }
-
-    .m-heading {
-      color: #00ff41;
-      font-family: monospace;
-      text-shadow: 0 0 10px #00ff41, 0 0 20px rgba(0,255,65,0.4);
+    :root {
+      --m-bg: #000;
+      --m-bright: #39ff14;
+      --m-text: #00ff41;
+      --m-mid: #00cc33;
+      --m-dim: #003b00;
     }
 
-    .m-card         { border: 1px solid #003b00; background: #000; }
-    .m-card-active  { border: 1px solid #00ff41; background: #000; box-shadow: 0 0 10px rgba(0,255,65,0.1), inset 0 0 10px rgba(0,255,65,0.03); }
+    body { background-color: var(--m-bg); color: var(--m-text); font-family: 'Courier New', Courier, monospace; }
+
+    .m-bright  { color: var(--m-bright); text-shadow: 0 0 8px var(--m-bright); }
+    .m-text    { color: var(--m-text); }
+    .m-mid     { color: var(--m-mid); }
+    .m-dim     { color: var(--m-dim); }
+
+    .m-heading {
+      color: var(--m-text);
+      font-family: monospace;
+      text-shadow: 0 0 10px var(--m-text), 0 0 20px rgba(0,255,65,0.4);
+    }
+
+    .m-card         { border: 1px solid var(--m-dim); background: var(--m-bg); }
+    .m-card-active  { border: 1px solid var(--m-text); background: var(--m-bg); box-shadow: 0 0 10px rgba(0,255,65,0.1), inset 0 0 10px rgba(0,255,65,0.03); }
 
     .m-btn-primary {
-      background: #00ff41;
-      color: #000;
+      background: var(--m-text);
+      color: var(--m-bg);
       font-family: monospace;
       font-weight: bold;
       padding: 10px 24px;
@@ -35,16 +43,16 @@ import { personal, about, skills, experience, education, gameDev, hobbies } from
       font-size: 0.8rem;
       transition: box-shadow 0.2s;
     }
-    .m-btn-primary:hover { box-shadow: 0 0 20px #00ff41, 0 0 40px rgba(0,255,65,0.3); }
+    .m-btn-primary:hover { box-shadow: 0 0 20px var(--m-text), 0 0 40px rgba(0,255,65,0.3); }
 
     .m-btn-secondary {
       background: transparent;
-      color: #00ff41;
+      color: var(--m-text);
       font-family: monospace;
       font-weight: bold;
       padding: 10px 24px;
       display: inline-block;
-      border: 1px solid #00ff41;
+      border: 1px solid var(--m-text);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       font-size: 0.8rem;
@@ -53,21 +61,24 @@ import { personal, about, skills, experience, education, gameDev, hobbies } from
     .m-btn-secondary:hover { background: rgba(0,255,65,0.07); box-shadow: 0 0 15px rgba(0,255,65,0.2); }
 
     .m-tag {
-      border: 1px solid #003b00;
-      color: #00cc33;
+      border: 1px solid var(--m-dim);
+      color: var(--m-mid);
       font-size: 0.7rem;
       padding: 3px 8px;
       background: rgba(0,255,65,0.04);
     }
 
+    .m-border-dim { border-color: var(--m-dim); }
+    .m-hover-text:hover { color: var(--m-text); }
+
     .cursor {
       display: inline-block;
       width: 8px;
       height: 14px;
-      background: #00ff41;
+      background: var(--m-text);
       vertical-align: middle;
       animation: cur 1s step-end infinite;
-      box-shadow: 0 0 6px #00ff41;
+      box-shadow: 0 0 6px var(--m-text);
     }
     @keyframes cur { 50% { opacity: 0; } }
 
@@ -77,14 +88,14 @@ import { personal, about, skills, experience, education, gameDev, hobbies } from
   <canvas id="matrix-rain"></canvas>
 
   <!-- NAV -->
-  <nav class="fixed top-0 left-0 right-0 z-50 border-b border-[#003b00]" style="background: rgba(0,0,0,0.92);">
+  <nav class="fixed top-0 left-0 right-0 z-50 border-b m-border-dim" style="background: rgba(0,0,0,0.92);">
     <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
       <span class="font-mono font-bold text-sm m-bright">{personal.initials}<span class="cursor"></span></span>
       <div class="flex gap-6 text-xs font-mono m-mid">
-        <a href="#about-matrix" class="hover:text-[#00ff41] transition-colors">./about</a>
-        <a href="#work-matrix" class="hover:text-[#00ff41] transition-colors">./work</a>
-        <a href="#gamedev-matrix" class="hover:text-[#00ff41] transition-colors">./games</a>
-        <a href="#contact-matrix" class="hover:text-[#00ff41] transition-colors">./contact</a>
+        <a href="#about-matrix" class="m-hover-text transition-colors">./about</a>
+        <a href="#work-matrix" class="m-hover-text transition-colors">./work</a>
+        <a href="#gamedev-matrix" class="m-hover-text transition-colors">./games</a>
+        <a href="#contact-matrix" class="m-hover-text transition-colors">./contact</a>
       </div>
     </div>
   </nav>
@@ -159,15 +170,15 @@ import { personal, about, skills, experience, education, gameDev, hobbies } from
                 periodClass="text-xs font-mono m-dim"
                 bulletClass="m-mid font-mono text-xs"
                 prevRoleClass="m-dim font-mono text-xs uppercase tracking-wider"
-                connectorLineClass="border-[#003b00]"
-                badgeClass="font-mono m-dim border border-[#003b00]"
+                connectorLineClass="m-border-dim"
+                badgeClass="font-mono m-dim border m-border-dim"
               />
             </div>
           ) : (
             <div class={`p-6 ${entry.current ? 'm-card-active' : 'm-card'}`}>
               <div class="flex items-start justify-between gap-4 flex-wrap mb-2">
                 <h3 class={`text-sm font-mono font-bold uppercase tracking-wider ${entry.current ? 'm-bright' : 'm-text'}`}>{entry.title}</h3>
-                <span class="text-xs font-mono m-dim border border-[#003b00] px-2 py-0.5">{entry.period}</span>
+                <span class="text-xs font-mono m-dim border m-border-dim px-2 py-0.5">{entry.period}</span>
               </div>
               <p class={`text-xs font-mono mb-4 ${entry.current ? 'm-text' : 'm-dim'}`}>
                 {entry.company} :: {entry.location}
@@ -190,7 +201,7 @@ import { personal, about, skills, experience, education, gameDev, hobbies } from
       <div class="m-card-active p-6">
         <div class="flex items-start justify-between gap-4 flex-wrap mb-2">
           <h3 class="text-sm font-mono font-bold m-bright uppercase">{education.school}</h3>
-          <span class="text-xs font-mono m-dim border border-[#003b00] px-2 py-0.5">GRAD {education.graduated}</span>
+          <span class="text-xs font-mono m-dim border m-border-dim px-2 py-0.5">GRAD {education.graduated}</span>
         </div>
         <p class="text-xs font-mono m-text mb-1">{education.degree} :: GPA {education.gpa}</p>
         <p class="m-dim text-xs font-mono">{education.minors}</p>
@@ -254,7 +265,7 @@ import { personal, about, skills, experience, education, gameDev, hobbies } from
   </section>
 
   <!-- FOOTER -->
-  <footer class="py-8 px-6 border-t border-[#003b00]">
+  <footer class="py-8 px-6 border-t m-border-dim">
     <div class="max-w-5xl mx-auto flex items-center justify-between text-xs font-mono m-dim">
       <span>// © {personal.copyright}</span>
       <span>built_with: [astro, tailwind]</span>
@@ -282,7 +293,7 @@ import { personal, about, skills, experience, education, gameDev, hobbies } from
     function draw() {
       ctx.fillStyle = 'rgba(0,0,0,0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#00ff41';
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--m-text').trim();
       ctx.font = `${size}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
