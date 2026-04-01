@@ -29,20 +29,52 @@ export const skills = {
   practices: ['RESTful API Design', 'Unit & Integration Testing', 'CI/CD', 'Agile', 'System Design', 'ADRs'],
 };
 
-export const experience = [
+export type RegularJob = {
+  company: string;
+  location: string;
+  period: string;
+  current?: boolean;
+  title: string;
+  bullets: string[];
+};
+
+export type PromotionGroup = {
+  type: 'promotion';
+  company: string;
+  location: string;
+  current?: boolean;
+  roles: Array<{
+    title: string;
+    period: string;
+    bullets: string[];
+  }>;
+};
+
+export type ExperienceEntry = RegularJob | PromotionGroup;
+
+export const experience: ExperienceEntry[] = [
   {
-    title: 'Software Engineer II',
+    type: 'promotion',
     company: 'Kahuna Workforce Solutions',
     location: 'Remote',
-    period: 'Dec 2024 – Present',
     current: true,
-    promotion: 'Promoted from Software Engineer · Dec 2025',
-    bullets: [
-      'Designed and shipped the full backend API surface for Ladder in C# / ASP.NET Core — from greenfield through first customer launch, as one of three backend engineers.',
-      'Implemented the core data layer — Elasticsearch for read performance, SQL as source of truth — using Entity Framework Core across the Ladder data domain.',
-      'Designed the integration and unit test suite using xUnit and Moq, leveraging WebApplicationFactory to test against real ES/DB.',
-      'Leading backend architecture for a major new feature — driving design reviews and cross-functional alignment across product, QA, and engineering.',
-      'Established a documentation practice: feature specs, ADRs, and a shared technical blog.',
+    roles: [
+      {
+        title: 'Software Engineer II',
+        period: 'Dec 2025 – Present',
+        bullets: [
+          'Designed and shipped the full backend API surface for Ladder in C# / ASP.NET Core — from greenfield through first customer launch, as one of three backend engineers.',
+          'Implemented the core data layer — Elasticsearch for read performance, SQL as source of truth — using Entity Framework Core across the Ladder data domain.',
+          'Designed the integration and unit test suite using xUnit and Moq, leveraging WebApplicationFactory to test against real ES/DB.',
+          'Leading backend architecture for a major new feature — driving design reviews and cross-functional alignment across product, QA, and engineering.',
+          'Established a documentation practice: feature specs, ADRs, and a shared technical blog.',
+        ],
+      },
+      {
+        title: 'Software Engineer',
+        period: 'Dec 2024 – Dec 2025',
+        bullets: [],
+      },
     ],
   },
   {
@@ -50,7 +82,6 @@ export const experience = [
     company: 'Building36',
     location: 'Needham, MA (Hybrid)',
     period: 'Apr 2022 – Nov 2024',
-    current: false,
     bullets: [
       'Led end-to-end delivery of a templated HTML email generation system — backend rendering layer, frontend templates, design docs, and PM/QA coordination through all milestones.',
       'Built full-stack HVAC monitoring features across backend services, data layer, and ASPX frontend.',
@@ -61,7 +92,6 @@ export const experience = [
     company: 'Savant Systems, Energy and Lighting',
     location: 'Hyannis, MA (Hybrid)',
     period: 'Jan 2021 – Mar 2022',
-    current: false,
     bullets: [
       'Implemented a CAN Bus communication layer in Rust and Go — parsing live device telemetry and enabling bidirectional control of the microgrid controller.',
       'Extended a Go RESTful API to enable full CRUD control over HVAC devices, including SQL-to-JSON serialization for downstream consumption.',
@@ -72,7 +102,6 @@ export const experience = [
     company: 'Fidelity Investments',
     location: 'Merrimack, NH (Remote)',
     period: 'Jun – Aug 2020',
-    current: false,
     bullets: [
       'Integrated a third-party vendor (Axway) to automate file transfers to a PostgreSQL database via FTPS, replacing a manual process.',
     ],
@@ -82,7 +111,6 @@ export const experience = [
     company: 'Bose Corporation',
     location: 'Framingham, MA (On-Site)',
     period: 'May 2019 – Jan 2020',
-    current: false,
     bullets: [
       'Designed unit test infrastructure using Google Test Framework.',
       'Owned codebase migration from SVN to GitHub, updating build configuration across Make and CMake files.',

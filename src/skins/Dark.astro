@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SkinDrawer from '../components/SkinDrawer.astro';
+import PromotionGroup from '../components/PromotionGroup.astro';
 import { personal, about, skills, experience, education, gameDev, hobbies } from '../data/content';
 ---
 
@@ -78,20 +79,34 @@ import { personal, about, skills, experience, education, gameDev, hobbies } from
     <div class="max-w-5xl mx-auto">
       <h2 class="text-3xl font-bold mb-16 text-slate-100">Experience</h2>
       <div class="space-y-10">
-        {experience.map(job => (
-          <div class={`border-l-2 pl-6 ${job.current ? 'border-emerald-500' : 'border-slate-700'}`}>
-            <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
-              <h3 class="text-lg font-semibold text-slate-100">{job.title}</h3>
-              <span class="text-sm text-slate-500">{job.period}</span>
+        {experience.map(entry => (
+          entry.type === 'promotion' ? (
+            <div class={`border-l-2 pl-6 ${entry.current ? 'border-emerald-500' : 'border-slate-700'}`}>
+              <PromotionGroup
+                group={entry}
+                titleClass="text-lg font-semibold text-slate-100"
+                companyClass={entry.current ? 'text-emerald-400' : 'text-slate-400'}
+                periodClass="text-sm text-slate-500"
+                bulletClass="text-slate-400"
+                prevRoleClass="text-slate-400"
+                connectorLineClass="border-slate-700"
+                badgeClass="text-slate-600 border border-slate-700"
+              />
             </div>
-            <p class={`text-sm ${job.promotion ? 'mb-1' : 'mb-3'} ${job.current ? 'text-emerald-400' : 'text-slate-400'}`}>
-              {job.company} · {job.location}
-            </p>
-            {job.promotion && <p class="text-xs text-slate-600 mb-3">{job.promotion}</p>}
-            <ul class="text-slate-400 text-sm space-y-2 list-disc list-inside leading-relaxed">
-              {job.bullets.map(b => <li>{b}</li>)}
-            </ul>
-          </div>
+          ) : (
+            <div class={`border-l-2 pl-6 ${entry.current ? 'border-emerald-500' : 'border-slate-700'}`}>
+              <div class="flex items-start justify-between gap-4 flex-wrap mb-1">
+                <h3 class="text-lg font-semibold text-slate-100">{entry.title}</h3>
+                <span class="text-sm text-slate-500">{entry.period}</span>
+              </div>
+              <p class={`text-sm mb-3 ${entry.current ? 'text-emerald-400' : 'text-slate-400'}`}>
+                {entry.company} · {entry.location}
+              </p>
+              <ul class="text-slate-400 text-sm space-y-2 list-disc list-inside leading-relaxed">
+                {entry.bullets.map(b => <li>{b}</li>)}
+              </ul>
+            </div>
+          )
         ))}
       </div>
     </div>
