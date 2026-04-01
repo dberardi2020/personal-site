@@ -41,12 +41,15 @@ const { current } = Astro.props;
           class={`flex flex-col gap-1 p-4 rounded-xl border transition-colors ${
             isActive
               ? 'bg-white/10 border-white/30 text-white'
-              : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 hover:text-white'
+              : skin.active
+                ? 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 hover:text-white'
+                : 'bg-white/[0.02] border-white/5 text-slate-600 hover:bg-white/5 hover:text-slate-500'
           }`}
         >
           <span class="font-medium text-sm">{skin.label}</span>
           <span class="text-xs opacity-60">{skin.desc}</span>
           {isActive && <span class="text-xs text-emerald-400 mt-1">Current</span>}
+          {!skin.active && !isActive && <span class="text-xs text-slate-600 mt-1">Coming Soon</span>}
         </a>
       );
     })}
