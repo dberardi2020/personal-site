@@ -6,12 +6,29 @@ import SkinDrawer from '../../components/SkinDrawer.astro';
 <Layout title="3D / Motion - Coming Soon">
   <style is:global>
     body { background-color: #0D1117; }
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .anim-bg {
+      background: linear-gradient(-45deg, #0D1117, #0f2027, #1a0533, #0D1117);
+      background-size: 400% 400%;
+      animation: gradient-shift 12s ease infinite;
+    }
   </style>
 
-  <main class="min-h-screen flex flex-col items-center justify-center gap-6 p-8 text-center">
-    <p class="text-slate-500 text-xs tracking-widest uppercase">3D / Motion Skin</p>
-    <h1 class="text-5xl font-bold text-white">Coming Soon</h1>
-    <a href="/" class="text-slate-400 hover:text-white text-sm transition-colors">Back to Matrix</a>
+  <main class="anim-bg min-h-screen flex flex-col items-center justify-center gap-8 p-8 text-center">
+    <p class="text-cyan-400 text-xs font-medium tracking-widest uppercase">3D / Motion Skin</p>
+    <h1 class="text-6xl md:text-8xl font-bold tracking-tight text-white leading-tight">
+      Coming<br />
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-400">Soon.</span>
+    </h1>
+    <p class="text-slate-400 max-w-sm leading-relaxed">
+      This skin is parked. The active experience is Matrix.
+    </p>
+    <a href="/" class="px-6 py-3 border border-slate-700 hover:border-cyan-500/50 text-slate-300 hover:text-white font-semibold rounded-lg transition-all">
+      Back to Matrix
+    </a>
   </main>
 
   <SkinDrawer current="3D / Motion" />

@@ -1,4 +1,36 @@
 ---
-import Bold from '../../skins/Bold.astro';
+import Layout from '../../layouts/Layout.astro';
+import SkinDrawer from '../../components/SkinDrawer.astro';
 ---
-<Bold />
+
+<Layout title="Bold - Coming Soon">
+  <style is:global>
+    body { background-color: #09090b; color: #fff; }
+    .gradient-text {
+      background: linear-gradient(135deg, #f472b6, #fb923c, #facc15);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-border {
+      background: linear-gradient(#09090b, #09090b) padding-box,
+                  linear-gradient(135deg, #f472b6, #fb923c, #facc15) border-box;
+      border: 2px solid transparent;
+    }
+  </style>
+
+  <main class="min-h-screen flex flex-col items-center justify-center gap-8 p-8 text-center">
+    <p class="text-slate-500 text-xs tracking-widest uppercase">Bold Skin</p>
+    <h1 class="gradient-text text-6xl md:text-8xl font-black tracking-tight leading-none">
+      Coming<br />Soon.
+    </h1>
+    <p class="text-slate-400 max-w-sm leading-relaxed">
+      This skin is parked. The active experience is Matrix.
+    </p>
+    <a href="/" class="gradient-border px-6 py-3 text-white font-semibold text-sm rounded-lg hover:bg-white/5 transition-colors">
+      Back to Matrix
+    </a>
+  </main>
+
+  <SkinDrawer current="Bold" />
+</Layout>
