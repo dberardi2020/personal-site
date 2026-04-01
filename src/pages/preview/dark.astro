@@ -1,4 +1,21 @@
 ---
-import Dark from '../../skins/Dark.astro';
+import Layout from '../../layouts/Layout.astro';
+import SkinDrawer from '../../components/SkinDrawer.astro';
 ---
-<Dark />
+
+<Layout title="Dark - Coming Soon">
+  <main class="min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6 p-8 text-center">
+    <p class="text-slate-500 text-xs tracking-widest uppercase">Dark Skin</p>
+    <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-slate-100">
+      Coming Soon
+    </h1>
+    <p class="text-slate-500 max-w-sm leading-relaxed">
+      This skin is parked. The active experience is Matrix.
+    </p>
+    <a href="/" class="px-6 py-3 border border-slate-700 text-slate-400 hover:text-slate-100 hover:border-emerald-500/50 font-medium rounded-lg transition-colors">
+      Back to Matrix
+    </a>
+  </main>
+
+  <SkinDrawer current="Dark" />
+</Layout>
